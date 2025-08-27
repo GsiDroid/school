@@ -1,0 +1,335 @@
+/**
+ * School Management System - Custom CSS
+ * 
+ * This file contains custom styles for the School Management System
+ * following the requirements for a modern, responsive design with
+ * multiple professional themes.
+ */
+
+:root {
+    /* Default theme colors (Corporate Blue) */
+    --primary-color: #4e73df;
+    --secondary-color: #2e59d9;
+    --success-color: #1cc88a;
+    --info-color: #36b9cc;
+    --warning-color: #f6c23e;
+    --danger-color: #e74a3b;
+    --light-color: #f8f9fc;
+    --dark-color: #5a5c69;
+    
+    /* Typography */
+    --font-primary: 'Poppins', sans-serif;
+    --font-secondary: 'Inter', sans-serif;
+    --font-tertiary: 'Roboto', sans-serif;
+}
+
+/* Base Styles */
+body {
+    font-family: var(--font-primary);
+    color: #333;
+    background-color: #f8f9fc;
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-secondary);
+    font-weight: 600;
+    color: #333;
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+a:hover {
+    color: var(--secondary-color);
+    text-decoration: none;
+}
+
+/* Button Styles */
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-primary:hover, .btn-primary:focus {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+.btn-success {
+    background-color: var(--success-color);
+    border-color: var(--success-color);
+}
+
+.btn-info {
+    background-color: var(--info-color);
+    border-color: var(--info-color);
+}
+
+.btn-warning {
+    background-color: var(--warning-color);
+    border-color: var(--warning-color);
+}
+
+.btn-danger {
+    background-color: var(--danger-color);
+    border-color: var(--danger-color);
+}
+
+/* Card Styles */
+.card {
+    border: none;
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+    border-radius: 0.35rem;
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 2rem 0 rgba(58, 59, 69, 0.2);
+}
+
+.card-header {
+    background-color: #f8f9fc;
+    border-bottom: 1px solid #e3e6f0;
+    padding: 1rem 1.25rem;
+}
+
+.card-title {
+    margin-bottom: 0;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+/* Form Styles */
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.25rem rgba(78, 115, 223, 0.25);
+}
+
+.form-label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+/* Table Styles */
+.table {
+    color: #333;
+}
+
+.table thead th {
+    background-color: #f8f9fc;
+    color: var(--primary-color);
+    font-weight: 600;
+    border-bottom: 2px solid #e3e6f0;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(78, 115, 223, 0.05);
+}
+
+/* DataTables Custom Styling */
+.dataTables_wrapper .dataTables_paginate .paginate_button.current, 
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+    background: var(--primary-color) !important;
+    color: white !important;
+    border: 1px solid var(--primary-color) !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background: var(--secondary-color) !important;
+    color: white !important;
+    border: 1px solid var(--secondary-color) !important;
+}
+
+/* Badge Styles */
+.badge-primary {
+    background-color: var(--primary-color);
+}
+
+.badge-success {
+    background-color: var(--success-color);
+}
+
+.badge-info {
+    background-color: var(--info-color);
+}
+
+.badge-warning {
+    background-color: var(--warning-color);
+}
+
+.badge-danger {
+    background-color: var(--danger-color);
+}
+
+/* Alert Styles */
+.alert-primary {
+    background-color: rgba(78, 115, 223, 0.15);
+    border-color: rgba(78, 115, 223, 0.3);
+    color: var(--primary-color);
+}
+
+.alert-success {
+    background-color: rgba(28, 200, 138, 0.15);
+    border-color: rgba(28, 200, 138, 0.3);
+    color: var(--success-color);
+}
+
+.alert-info {
+    background-color: rgba(54, 185, 204, 0.15);
+    border-color: rgba(54, 185, 204, 0.3);
+    color: var(--info-color);
+}
+
+.alert-warning {
+    background-color: rgba(246, 194, 62, 0.15);
+    border-color: rgba(246, 194, 62, 0.3);
+    color: var(--warning-color);
+}
+
+.alert-danger {
+    background-color: rgba(231, 74, 59, 0.15);
+    border-color: rgba(231, 74, 59, 0.3);
+    color: var(--danger-color);
+}
+
+/* Progress Bar Styles */
+.progress {
+    height: 0.5rem;
+    background-color: #eaecf4;
+}
+
+.progress-bar {
+    background-color: var(--primary-color);
+}
+
+/* Custom Animations */
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.slide-in-left {
+    animation: slideInLeft 0.5s ease-in-out;
+}
+
+@keyframes slideInLeft {
+    from { transform: translateX(-20px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+.slide-in-right {
+    animation: slideInRight 0.5s ease-in-out;
+}
+
+@keyframes slideInRight {
+    from { transform: translateX(20px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+/* Accessibility Styles */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+    :root {
+        --primary-color: #0000ff;
+        --secondary-color: #000099;
+        --success-color: #008000;
+        --info-color: #0099cc;
+        --warning-color: #cc6600;
+        --danger-color: #cc0000;
+    }
+    
+    body {
+        color: #000;
+        background-color: #fff;
+    }
+    
+    a {
+        color: #0000ff;
+        text-decoration: underline;
+    }
+    
+    .card {
+        border: 1px solid #000;
+    }
+}
+
+/* Print Styles */
+@media print {
+    body {
+        background-color: #fff;
+        color: #000;
+    }
+    
+    .sidebar, .top-navbar, .theme-selector, .btn {
+        display: none !important;
+    }
+    
+    .main-content {
+        margin-left: 0 !important;
+        padding: 0 !important;
+    }
+    
+    .card {
+        box-shadow: none !important;
+        border: 1px solid #ddd !important;
+    }
+    
+    a {
+        color: #000 !important;
+        text-decoration: underline !important;
+    }
+}
+
+/* Responsive Styles */
+@media (max-width: 992px) {
+    .card-deck {
+        display: block;
+    }
+    
+    .card-deck .card {
+        margin-bottom: 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .welcome-banner h2 {
+        font-size: 1.5rem;
+    }
+    
+    .current-date-time {
+        display: none;
+    }
+}
+
+@media (max-width: 576px) {
+    .card-header {
+        flex-direction: column;
+        align-items: flex-start !important;
+    }
+    
+    .card-header .btn {
+        margin-top: 10px;
+        width: 100%;
+    }
+}
