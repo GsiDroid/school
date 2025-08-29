@@ -22,9 +22,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Validate and sanitize input
     $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
     $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
-    $password = $_POST['password'] ?? '';
-    $confirm_password = $_POST['confirm_password'] ?? '';
-    $admin_passcode = $_POST['admin_passcode'] ?? '';
+    $password = filter_input(INPUT_POST, 'password');
+    $confirm_password = filter_input(INPUT_POST, 'confirm_password');
+    $admin_passcode = filter_input(INPUT_POST, 'admin_passcode');
+    
+    // Get admin passcode from database
+    $stmt = $conn->prepare("SELECT setting_value FROM system_settings WHERE setting_key = 'admin_passcode'");
+    $stmt->execute();
+    $correct_passcode = $stmt->fetchColumn();
     
     // Validate name
     if (empty($name)) {
@@ -60,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Validate admin passcode
     if (empty($admin_passcode)) {
         $errors['admin_passcode'] = 'Admin passcode is required';
-    } elseif ($admin_passcode !== '623264') { // Required admin passcode as specified
+    } elseif ($admin_passcode !== $correct_passcode) { // Required admin passcode as specified
         $errors['admin_passcode'] = 'Invalid admin passcode';
     }
     

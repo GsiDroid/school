@@ -12,7 +12,7 @@ $stats = [
     'total_students' => 0,
     'today_attendance' => 0,
     'pending_fees' => 0,
-    'upcoming_exams' => 0
+    'pending_requests' => 0
 ];
 
 // Get total students
@@ -39,11 +39,11 @@ $stmt->execute();
 $result = $stmt->fetch(PDO::FETCH_ASSOC);
 $stats['pending_fees'] = (int)$result['pending'];
 
-// Get upcoming exams (next 7 days)
-$stmt = $conn->prepare("SELECT COUNT(*) as upcoming FROM exams WHERE exam_date BETWEEN CURDATE() AND CURDATE() + INTERVAL 7 DAY");
+// Get pending requests (pending expenses)
+$stmt = $conn->prepare("SELECT COUNT(*) as pending FROM expenses WHERE approval_status = 'pending'");
 $stmt->execute();
 $result = $stmt->fetch(PDO::FETCH_ASSOC);
-$stats['upcoming_exams'] = (int)$result['upcoming'];
+$stats['pending_requests'] = (int)$result['pending'];
 
 // Get attendance trend (last 7 days)
 $attendance = ['labels' => [], 'data' => []];
@@ -113,11 +113,40 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     ];
 }
 
+// Get announcements
+$announcements = [];
+$stmt = $conn->prepare("SELECT title, content, priority, created_at FROM announcements ORDER BY created_at DESC LIMIT 5");
+$stmt->execute();
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    $announcements[] = [
+        'title' => $row['title'],
+        'content' => $row['content'],
+        'priority' => $row['priority'],
+        'date' => date('Y-m-d', strtotime($row['created_at']))
+    ];
+}
+
+// Get calendar events
+$events = [];
+$stmt = $conn->prepare("SELECT title, description, start_date, end_date, color FROM events");
+$stmt->execute();
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    $events[] = [
+        'title' => $row['title'],
+        'description' => $row['description'],
+        'start' => $row['start_date'],
+        'end' => $row['end_date'],
+        'color' => $row['color']
+    ];
+}
+
 // Return all data
 echo json_encode([
     'stats' => $stats,
     'attendance' => $attendance,
     'fee_status' => $fee_status,
-    'recent_activity' => $recent_activity
+    'recent_activity' => $recent_activity,
+    'announcements' => $announcements,
+    'events' => $events
 ]);
 ?>

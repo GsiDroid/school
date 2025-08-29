@@ -26,6 +26,9 @@ $message = '';
 
 // Delete user
 if (isset($_GET['delete']) && is_numeric($_GET['delete'])) {
+    if (!isset($_GET['csrf_token']) || $_GET['csrf_token'] !== $_SESSION['csrf_token']) {
+        die('CSRF token validation failed.');
+    }
     $user_id = $_GET['delete'];
     
     // Don't allow deleting your own account
@@ -44,11 +47,14 @@ if (isset($_GET['delete']) && is_numeric($_GET['delete'])) {
 
 // Add/Edit user
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $user_id = isset($_POST['user_id']) ? $_POST['user_id'] : null;
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $role = $_POST['role'];
-    $password = $_POST['password'];
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        die('CSRF token validation failed.');
+    }
+    $user_id = filter_input(INPUT_POST, 'user_id', FILTER_VALIDATE_INT);
+    $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
+    $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+    $role = filter_input(INPUT_POST, 'role', FILTER_SANITIZE_STRING);
+    $password = filter_input(INPUT_POST, 'password');
     
     try {
         // Update existing user
@@ -146,7 +152,7 @@ include_once '../includes/header.php';
                             </button>
                             
                             <?php if ($user['id'] != $_SESSION['user_id']): ?>
-                            <a href="?delete=<?php echo $user['id']; ?>" class="btn btn-sm btn-danger" 
+                            <a href="?delete=<?php echo $user['id']; ?>&csrf_token=<?php echo $_SESSION['csrf_token'] ?? ''; ?>" class="btn btn-sm btn-danger" 
                                onclick="return confirm('Are you sure you want to delete this user?');">
                                 <i class="fas fa-trash"></i>
                             </a>
@@ -171,6 +177,7 @@ include_once '../includes/header.php';
                 </div>
                 <div class="modal-body">
                     <input type="hidden" name="user_id" id="user_id">
+                    <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token'] ?? ''; ?>">
                     
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
@@ -208,44 +215,6 @@ include_once '../includes/header.php';
     </div>
 </div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Initialize DataTable
-        $('#usersTable').DataTable();
-        
-        // Handle edit user button clicks
-        const editButtons = document.querySelectorAll('.edit-user');
-        editButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const userId = this.getAttribute('data-id');
-                const userName = this.getAttribute('data-name');
-                const userEmail = this.getAttribute('data-email');
-                const userRole = this.getAttribute('data-role');
-                
-                document.getElementById('userModalLabel').textContent = 'Edit User';
-                document.getElementById('user_id').value = userId;
-                document.getElementById('name').value = userName;
-                document.getElementById('email').value = userEmail;
-                document.getElementById('role').value = userRole;
-                document.getElementById('password-label').textContent = 'Password (Change)';
-                document.getElementById('password-help').style.display = 'inline';
-                document.getElementById('password').required = false;
-            });
-        });
-        
-        // Handle add new user button
-        const addUserButton = document.querySelector('[data-bs-target="#userModal"]:not(.edit-user)');
-        addUserButton.addEventListener('click', function() {
-            document.getElementById('userModalLabel').textContent = 'Add New User';
-            document.getElementById('user_id').value = '';
-            document.getElementById('name').value = '';
-            document.getElementById('email').value = '';
-            document.getElementById('role').value = 'staff';
-            document.getElementById('password-label').textContent = 'Password';
-            document.getElementById('password-help').style.display = 'none';
-            document.getElementById('password').required = true;
-        });
-    });
-</script>
+<script src="../assets/js/users.js"></script>
 
 <?php include_once '../includes/footer.php'; ?>

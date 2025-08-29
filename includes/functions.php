@@ -1,4 +1,10 @@
 <?php
+// Define BASE_URL
+$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+$host = $_SERVER['HTTP_HOST'];
+$script_name = str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
+define('BASE_URL', $protocol . $host . $script_name);
+
 /**
  * Common functions for the School Management System
  */

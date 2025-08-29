@@ -104,7 +104,7 @@ include_once '../includes/header.php';
                             <h5 class="mb-0">Absent Students</h5>
                             <?php
                             // Get today's absent count
-                            $stmt = $conn->prepare("SELECT COUNT(*) as count FROM attendance WHERE DATE(attendance_date) = CURDATE() AND status = 'absent'");
+                            $stmt = $conn->prepare("SELECT COUNT(*) as count FROM attendance WHERE date = CURDATE() AND status = 'absent'");
                             $stmt->execute();
                             $today_absent = $stmt->fetch(PDO::FETCH_ASSOC)['count'];
                             ?>
@@ -129,7 +129,7 @@ include_once '../includes/header.php';
                             <h5 class="mb-0">Late Students</h5>
                             <?php
                             // Get today's late count
-                            $stmt = $conn->prepare("SELECT COUNT(*) as count FROM attendance WHERE DATE(attendance_date) = CURDATE() AND status = 'late'");
+                            $stmt = $conn->prepare("SELECT COUNT(*) as count FROM attendance WHERE date = CURDATE() AND status = 'late'");
                             $stmt->execute();
                             $today_late = $stmt->fetch(PDO::FETCH_ASSOC)['count'];
                             ?>
@@ -225,7 +225,7 @@ include_once '../includes/header.php';
                                  LEFT JOIN students s ON a.student_id = s.id 
                                  LEFT JOIN classes c ON s.class_id = c.id 
                                  $where_clause 
-                                 ORDER BY a.attendance_date DESC, s.last_name, s.first_name";
+                                 ORDER BY a.date DESC, s.last_name, s.first_name";
                         $stmt = $conn->prepare($query);
                         $stmt->execute($params);
                         $attendance_records = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -268,9 +268,13 @@ include_once '../includes/header.php';
                                         <a href="edit_attendance.php?id=<?php echo $record['id']; ?>" class="btn btn-sm btn-primary">
                                             <i class="fas fa-edit"></i>
                                         </a>
-                                        <a href="#" class="btn btn-sm btn-danger delete-attendance" data-id="<?php echo $record['id']; ?>">
-                                            <i class="fas fa-trash"></i>
-                                        </a>
+                                        <form action="delete_attendance.php" method="POST" class="d-inline">
+                                            <input type="hidden" name="id" value="<?php echo $record['id']; ?>">
+                                            <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token'] ?? ''; ?>">
+                                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this attendance record?');">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
                                     </div>
                                 </td>
                             </tr>

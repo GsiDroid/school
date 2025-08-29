@@ -22,7 +22,7 @@ $errors = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Validate and sanitize input
     $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
-    $password = $_POST['password'] ?? '';
+    $password = filter_input(INPUT_POST, 'password');
     
     // Validate email
     if (empty($email)) {

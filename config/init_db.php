@@ -21,7 +21,7 @@ try {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
     // Read and execute the SQL file
-    $sqlFile = __DIR__ . '/../database/school_management.sql';
+    $sqlFile = __DIR__ . '/../database/school_management_no_triggers.sql';
     
     if (file_exists($sqlFile)) {
         $sql = file_get_contents($sqlFile);
