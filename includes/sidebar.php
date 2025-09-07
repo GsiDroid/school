@@ -1,144 +1,59 @@
-<!-- Sidebar -->
-<div class="sidebar" id="sidebar">
+<aside class="sidebar">
     <div class="sidebar-header">
-        <img src="assets/img/logo.png" alt="School Logo" class="sidebar-logo">
-        <div class="sidebar-brand">School MS</div>
+        <img src="<?php echo $base_path; ?>assets/img/<?php echo htmlspecialchars($_SESSION['settings']['school_logo'] ?? 'default.png'); ?>" alt="Logo" class="sidebar-logo">
+        <h2><?php echo htmlspecialchars($_SESSION['settings']['school_name'] ?? 'SMS'); ?></h2>
     </div>
-    
-    <ul class="sidebar-menu">
-        <!-- Dashboard -->
-        <li class="sidebar-menu-item">
-            <a href="<?php echo (strpos($_SERVER['PHP_SELF'], '/dashboard.php') !== false && dirname($_SERVER['PHP_SELF']) == '/xampp/htdocs') ? 'dashboard.php' : '../dashboard.php'; ?>" class="sidebar-menu-link <?php echo $currentPage === 'dashboard' ? 'active' : ''; ?>">
-                <span class="sidebar-menu-icon"><i class="fas fa-tachometer-alt"></i></span>
-                <span class="sidebar-menu-text">Dashboard</span>
-            </a>
-        </li>
-        
-        <!-- Student Management -->
-        <li class="sidebar-menu-item">
-            <a href="<?php echo (dirname($_SERVER['PHP_SELF']) == '/xampp/htdocs') ? 'students/index.php' : '../students/index.php'; ?>" class="sidebar-menu-link <?php echo $currentPage === 'students' ? 'active' : ''; ?>">
-                <span class="sidebar-menu-icon"><i class="fas fa-user-graduate"></i></span>
-                <span class="sidebar-menu-text">Students</span>
-            </a>
-        </li>
-        
-        <!-- Fees Management -->
-        <li class="sidebar-menu-item">
-            <a href="<?php echo (dirname($_SERVER['PHP_SELF']) == '/xampp/htdocs') ? 'fees/index.php' : '../fees/index.php'; ?>" class="sidebar-menu-link <?php echo $currentPage === 'fees' || $currentPage === 'fees_management' ? 'active' : ''; ?>">
-                <span class="sidebar-menu-icon"><i class="fas fa-dollar-sign"></i></span>
-                <span class="sidebar-menu-text">Fees</span>
-            </a>
-        </li>
-        
-        <!-- Expenses Management -->
-        <li class="sidebar-menu-item">
-            <a href="<?php echo (dirname($_SERVER['PHP_SELF']) == '/xampp/htdocs') ? 'expenses/index.php' : '../expenses/index.php'; ?>" class="sidebar-menu-link <?php echo $currentPage === 'expenses' ? 'active' : ''; ?>">
-                <span class="sidebar-menu-icon"><i class="fas fa-file-invoice-dollar"></i></span>
-                <span class="sidebar-menu-text">Expenses</span>
-            </a>
-        </li>
-        
-        <div class="sidebar-divider"></div>
-        
-        <!-- Attendance -->
-        <li class="sidebar-menu-item">
-            <a href="<?php echo (dirname($_SERVER['PHP_SELF']) == '/xampp/htdocs') ? 'attendance/index.php' : '../attendance/index.php'; ?>" class="sidebar-menu-link <?php echo $currentPage === 'attendance' ? 'active' : ''; ?>">
-                <span class="sidebar-menu-icon"><i class="fas fa-calendar-check"></i></span>
-                <span class="sidebar-menu-text">Attendance</span>
-            </a>
-        </li>
-        
-        <!-- Exams & Results -->
-        <li class="sidebar-menu-item">
-            <a href="<?php echo (dirname($_SERVER['PHP_SELF']) == '/xampp/htdocs') ? 'exams/index.php' : '../exams/index.php'; ?>" class="sidebar-menu-link <?php echo $currentPage === 'exams' ? 'active' : ''; ?>">
-                <span class="sidebar-menu-icon"><i class="fas fa-graduation-cap"></i></span>
-                <span class="sidebar-menu-text">Exams & Results</span>
-            </a>
-        </li>
-        
-        <!-- Photo Gallery -->
-        <li class="sidebar-menu-item">
-            <a href="<?php echo (dirname($_SERVER['PHP_SELF']) == '/xampp/htdocs') ? 'gallery/index.php' : '../gallery/index.php'; ?>" class="sidebar-menu-link <?php echo $currentPage === 'gallery' ? 'active' : ''; ?>">
-                <span class="sidebar-menu-icon"><i class="fas fa-images"></i></span>
-                <span class="sidebar-menu-text">Gallery</span>
-            </a>
-        </li>
-        
-        <!-- Communication (Only visible to admin) -->
-        <?php if (isset($user['role']) && $user['role'] === 'admin'): ?>
-        <li class="sidebar-menu-item">
-            <a href="<?php echo (dirname($_SERVER['PHP_SELF']) == '/xampp/htdocs') ? 'communication/index.php' : '../communication/index.php'; ?>" class="sidebar-menu-link <?php echo $currentPage === 'communication' ? 'active' : ''; ?>">
-                <span class="sidebar-menu-icon"><i class="fas fa-envelope"></i></span>
-                <span class="sidebar-menu-text">Communication</span>
-            </a>
-        </li>
-        <?php endif; ?>
-        
-        <?php if (isset($user['role']) && $user['role'] === 'admin'): ?>
-        <div class="sidebar-divider"></div>
-        
-        <!-- Settings -->
-        <li class="sidebar-menu-item">
-            <a href="<?php echo (dirname($_SERVER['PHP_SELF']) == '/xampp/htdocs') ? 'settings/index.php' : '../settings/index.php'; ?>" class="sidebar-menu-link <?php echo $currentPage === 'settings' ? 'active' : ''; ?>">
-                <span class="sidebar-menu-icon"><i class="fas fa-cog"></i></span>
-                <span class="sidebar-menu-text">Settings</span>
-            </a>
-        </li>
-        
-        <!-- Users -->
-        <li class="sidebar-menu-item">
-            <a href="<?php echo (dirname($_SERVER['PHP_SELF']) == '/xampp/htdocs') ? 'users/index.php' : '../users/index.php'; ?>" class="sidebar-menu-link <?php echo $currentPage === 'users' ? 'active' : ''; ?>">
-                <span class="sidebar-menu-icon"><i class="fas fa-users-cog"></i></span>
-                <span class="sidebar-menu-text">Users</span>
-            </a>
-        </li>
-        
-        <!-- Backup & Restore -->
-        <li class="sidebar-menu-item">
-            <a href="<?php echo (dirname($_SERVER['PHP_SELF']) == '/xampp/htdocs') ? 'backup/index.php' : '../backup/index.php'; ?>" class="sidebar-menu-link <?php echo $currentPage === 'backup' ? 'active' : ''; ?>">
-                <span class="sidebar-menu-icon"><i class="fas fa-database"></i></span>
-                <span class="sidebar-menu-text">Backup & Restore</span>
-            </a>
-        </li>
-        <?php endif; ?>
-    </ul>
-    
-    <!-- Sidebar Footer -->
-<div class="mt-auto p-3 text-center">
-    <a href="logout.php" class="btn btn-light btn-sm">
-        <i class="fas fa-sign-out-alt"></i>
-        <span class="sidebar-menu-text">Logout</span>
-    </a>
-</div>
-</div>
-
-<!-- Top Navbar -->
-<div class="main-content" id="main-content">
-    <div class="top-navbar">
-        <button id="sidebar-toggle" class="navbar-toggler">
-            <i class="fas fa-bars"></i>
-        </button>
-        
-        <div class="navbar-search position-relative">
-            <input type="text" class="form-control navbar-search-input" placeholder="Search...">
-            <i class="fas fa-search navbar-search-icon"></i>
-        </div>
-        
-        <div class="navbar-user">
-            <div class="navbar-user-name d-none d-md-block">
-                <?php echo htmlspecialchars($_SESSION['user_name'] ?? 'User'); ?>
-            </div>
-            <div class="dropdown">
-                <a class="dropdown-toggle" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="assets/img/user-avatar.png" alt="User" class="navbar-user-img">
-                </a>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                    <li><a class="dropdown-item" href="<?php echo (dirname($_SERVER['PHP_SELF']) == '/xampp/htdocs') ? 'profile.php' : '../profile.php'; ?>"><i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Profile</a></li>
-                    <li><a class="dropdown-item" href="<?php echo (dirname($_SERVER['PHP_SELF']) == '/xampp/htdocs') ? 'settings/index.php' : '../settings/index.php'; ?>"><i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i> Settings</a></li>
-                    <li><a class="dropdown-item" href="<?php echo (dirname($_SERVER['PHP_SELF']) == '/xampp/htdocs') ? 'activity-log.php' : '../activity-log.php'; ?>"><i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i> Activity Log</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="<?php echo (dirname($_SERVER['PHP_SELF']) == '/xampp/htdocs') ? 'logout.php' : '../logout.php'; ?>"><i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> Logout</a></li>
+    <nav class="sidebar-nav">
+        <ul>
+            <li>
+                <a href="home.php" class="active"><i class="bi bi-house-door-fill"></i> <span>Dashboard</span></a>
+            </li>
+            
+            <?php if ($_SESSION['role'] == 'Admin'): ?>
+            <li class="menu-header"><span>Admin</span></li>
+            <li><a href="<?php echo $base_path; ?>students/index.php"><i class="bi bi-people-fill"></i> <span>Students</span></a></li>
+            <li><a href="<?php echo $base_path; ?>teachers/index.php"><i class="bi bi-person-video3"></i> <span>Teachers</span></a></li>
+            <li><a href="<?php echo $base_path; ?>classes/index.php"><i class="bi bi-bank"></i> <span>Classes</span></a></li>
+            <li><a href="<?php echo $base_path; ?>subjects/index.php"><i class="bi bi-book-fill"></i> <span>Subjects</span></a></li>
+            <li class="has-submenu">
+                <a href="#"><i class="bi bi-cash-coin"></i> <span>Fee Management</span> <i class="bi bi-chevron-down"></i></a>
+                <ul class="submenu">
+                    <li><a href="<?php echo $base_path; ?>fees/categories/index.php">Fee Categories</a></li>
+                    <li><a href="<?php echo $base_path; ?>fees/index.php">Fee Structure</a></li>
+                    <li><a href="#">Payment Reports</a></li>
                 </ul>
-            </div>
-        </div>
-    </div>
+            </li>
+            <li class="menu-header"><span>Reports</span></li>
+            <li><a href="<?php echo $base_path; ?>attendance/reports.php"><i class="bi bi-table"></i> <span>Attendance Report</span></a></li>
+            <li><a href="#"><i class="bi bi-gear-fill"></i> <span>Settings</span></a></li>
+            <?php endif; ?>
+
+            <?php if ($_SESSION['role'] == 'Teacher'): ?>
+            <li class="menu-header"><span>Teacher</span></li>
+            <li><a href="#"><i class="bi bi-calendar-check-fill"></i> <span>Attendance</span></a></li>
+            <li><a href="#"><i class="bi bi-pencil-square"></i> <span>Exam Results</span></a></li>
+            <?php endif; ?>
+
+            <?php if ($_SESSION['role'] == 'Cashier'): ?>
+            <li class="menu-header"><span>Cashier</span></li>
+            <li><a href="#"><i class="bi bi-receipt"></i> <span>Collect Fees</span></a></li>
+            <li><a href="#"><i class="bi bi-search"></i> <span>Search Student</span></a></li>
+            <?php endif; ?>
+
+            <?php if ($_SESSION['role'] == 'Student'): ?>
+            <li class="menu-header"><span>Student</span></li>
+            <li><a href="#"><i class="bi bi-person-fill"></i> <span>My Profile</span></a></li>
+            <li><a href="<?php echo $base_path; ?>results/my_results.php"><i class="bi bi-journal-text"></i> <span>View Results</span></a></li>
+            <li><a href="#"><i class="bi bi-check-circle-fill"></i> <span>View Attendance</span></a></li>
+            <li><a href="<?php echo $base_path; ?>fees/my_history.php"><i class="bi bi-currency-dollar"></i> <span>Fee History</span></a></li>
+            <li><a href="<?php echo $base_path; ?>timetable/my_schedule.php"><i class="bi bi-table"></i> <span>My Timetable</span></a></li>
+            <?php endif; ?>
+
+            <?php if ($_SESSION['role'] == 'Parent'): ?>
+            <li class="menu-header"><span>Parent Portal</span></li>
+            <li><a href="<?php echo $base_path; ?>home.php"><i class="bi bi-house-door-fill"></i> <span>My Children</span></a></li>
+            <?php endif; ?>
+        </ul>
+    </nav>
+</aside>
+</aside>
