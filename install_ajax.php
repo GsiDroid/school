@@ -141,7 +141,7 @@ function installSystem() {
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         
         // Read and execute SQL file
-        $sqlFile = 'database/school_management_fixed.sql';
+        $sqlFile = 'database/merged.sql';
         if (file_exists($sqlFile)) {
             $sql = file_get_contents($sqlFile);
             

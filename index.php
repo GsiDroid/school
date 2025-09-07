@@ -12,23 +12,23 @@ if (isset($_SESSION['user_id'])) {
 $error_message = '';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $username = $_POST['username'];
+    $email = $_POST['email'];
     $password = $_POST['password'];
 
-    if (empty($username) || empty($password)) {
-        $error_message = "Username and password are required.";
+    if (empty($email) || empty($password)) {
+        $error_message = "Email and password are required.";
     } else {
-        $stmt = $pdo->prepare("SELECT * FROM users WHERE username = ? AND is_active = 1");
-        $stmt->execute([$username]);
+        $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ? AND status = 'active'");
+        $stmt->execute([$email]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         // Note: Using a generic password for demonstration. Replace with password_verify().
         // The password hash '$2y$10$E.qLp3b7V6aC.1xY.b.d.e/U3f5j3.Z.cW/gY.h.i.j.k.l.m.n' is for 'password123'
         if ($user && password_verify($password, $user['password'])) {
             $_SESSION['user_id'] = $user['id'];
-            $_SESSION['username'] = $user['username'];
+            $_SESSION['username'] = $user['email'];
             $_SESSION['role'] = $user['role'];
-            $_SESSION['full_name'] = $user['full_name'];
+            $_SESSION['full_name'] = $user['name'];
             
             log_activity($pdo, $user['id'], "User logged in");
 
@@ -76,4 +76,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
     </div>
 </body>
-</html>
+</html>ml>
